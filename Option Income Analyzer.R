@@ -1,19 +1,17 @@
+# Load Libraries
+libraries = c(
+  "shiny","tidyverse","readr", "plyr","data.table","BatchGetSymbols","dplyr",
+  "quantmod","stringi","openxlsx","Rcpp","xts","stringr","lubridate","readxl",
+  "tidyquant","optionstrat","fredr")
+suppressWarnings(lapply(libraries, require, character.only = TRUE))
+
+# Set FRB Key
+fredr_set_key("abcdefghijklmnopqrstuvwxyz123456")
+
 portfolio <- data.frame(read_xlsx("IBKR Equity Book.xlsx"))
 
 Option_Income_Analyzer <- function(portfolio = portfolio){
-# Clear
-rm(list = ls())
-current_working_dir <- dirname(rstudioapi::getActiveDocumentContext()$path)
-setwd(current_working_dir)
-
-# Load Libraries
-libraries = c(
-  "shiny","tidyverse","readr", "plyr",
-  "data.table","BatchGetSymbols","dplyr","quantmod","stringi", "openxlsx", "Rcpp",
-  "xts","stringr","lubridate", "readxl", "tidyquant", "optionstrat", "fredr")
-suppressWarnings(lapply(libraries, require, character.only = TRUE))
-fredr_set_key("abcdefghijklmnopqrstuvwxyz123456")
-
+  
 # Expiry Dates - Third Friday of every month
 get_exp_date <- function(start.year, end.year){
   d <- seq(ISOdate(start.year - 1, 12, 1), ISOdate(end.year, 12, 1), by = "1 month")[-1]
