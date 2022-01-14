@@ -35,8 +35,7 @@ Options_Income_Analyzer <- function(portfolio = portfolio){
                 from = as.Date(as.yearqtr(Sys.Date())-2/4,frac=1),
                 to = as.Date(as.yearqtr(Sys.Date())-1/4,frac=1))
   
-  div <-div %>% group_by(symbol) %>%
-    arrange(value) %>% filter(row_number()==n())
+  div <- div %>%group_by(symbol) %>% arrange(value) %>%  slice(n())
   
   names(div)[1] <- "Ticker"
   div$value <- (div$value*4)/(getQuote(div$Ticker)$Last)
