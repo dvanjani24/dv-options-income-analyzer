@@ -5,16 +5,16 @@ setwd(current_working_dir)
 
 # Load Libraries
 libraries = c(
-  "shiny","tidyverse","readr", "plyr",
-  "data.table","BatchGetSymbols","dplyr","quantmod","stringi", "openxlsx", "Rcpp",
-  "xts","stringr","lubridate", "readxl", "tidyquant", "optionstrat", "fredr")
+  "shiny","tidyverse","readr", "plyr", "data.table","BatchGetSymbols","dplyr",
+  "quantmod","stringi", "openxlsx", "Rcpp","xts","stringr","lubridate",
+  "readxl", "tidyquant", "optionstrat", "fredr")
 suppressWarnings(lapply(libraries, require, character.only = TRUE))
 fredr_set_key("abcdefghijklmnopqrstuvwxyz123456")
 
 portfolio <- data.frame(read_xlsx("Portfolio.xlsx"))
 
 Options_Income_Analyzer <- function(portfolio = portfolio){
-  # Expiry Dates - Third Friday of every month
+  # Get Options Expiry Dates - Third Friday of every month
   get_exp_date <- function(start.year, end.year){
     d <- seq(ISOdate(start.year - 1, 12, 1), ISOdate(end.year, 12, 1), by = "1 month")[-1]
     d <- as.Date(d)
@@ -44,19 +44,21 @@ Options_Income_Analyzer <- function(portfolio = portfolio){
   portfolio$date <- NULL
   names(portfolio)[4] <- "Annual Dividend"
   portfolio <- portfolio[!is.na(portfolio$Ticker),]
+  
   # Set Exp Date
   exp.date <- exp.date.list[2,2]
   
-  #Current Price
+  # Current Price across all tickers
   portfolio$Price = getQuote(portfolio$Ticker)$Last
   
-  #Risk-free rate
+  #Risk-free rate (US 10Y Treasury Yield)
   getSymbols('DGS10',src='FRED')
   r = as.numeric(tail(DGS10,1))/100
   
   chain.list <- c()
   chain.list.p <- c()
   for (ticker in 1:length(portfolio$Ticker)){
+    # Get Call and Put Options Chain for each ticker
     chain = getOptionChain(portfolio$Ticker[ticker], exp.date)$calls
     chain.list[[ticker]] = data.frame(Price = rep(getQuote(portfolio$Ticker[ticker])$Last, nrow(chain)),
                                       Strike = chain$Strike,
@@ -181,7 +183,7 @@ Options_Income_Analyzer <- function(portfolio = portfolio){
     chain[[i]] <- chain.list[[i]][chain.list[[i]]$Delta<0.2 
                                   & chain.list[[i]]$Delta>0,]}
   
-  # Find most liquid Option Chain
+  # Find most liquid Option Chain (highest volume)
   res <- c()
   for (i in 1:length(chain)){
     temp.max <- chain[[i]][which.max(chain[[i]]$Vol),]
@@ -236,6 +238,7 @@ Options_Income_Analyzer <- function(portfolio = portfolio){
   summary <- merge(res,res.p, all = TRUE)
   summary <- summary[order(summary$`Annual Yield`, decreasing = TRUE),]
   
+  # Create workbook summarizing Options Income Analysis
   options_data <- function(){
     wb <- createWorkbook()
     addWorksheet(wb, "Summary")
