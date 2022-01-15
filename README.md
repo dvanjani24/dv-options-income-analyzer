@@ -1,3 +1,5 @@
+<img align = "right" width="75" alt="logo" src="https://user-images.githubusercontent.com/97678601/149636901-fb79e698-7c0e-47fb-bb88-033785485fc7.png"> 
+
 # DV Options Income Analyzer
 
 The DV Options Income Analyzer serves as an investment research tool for investors who are interested in deploying **low-risk options trading strategies for the core purposes of generating passive income and maintaining healthy portfolio management.**
