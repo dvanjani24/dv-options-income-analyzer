@@ -4,10 +4,8 @@ current_working_dir <- dirname(rstudioapi::getActiveDocumentContext()$path)
 setwd(current_working_dir)
 
 # Load Libraries
-libraries = c(
-  "shiny","tidyverse","readr", "plyr", "data.table","BatchGetSymbols","dplyr",
-  "quantmod","stringi", "openxlsx", "Rcpp","xts","stringr","lubridate",
-  "readxl", "tidyquant", "optionstrat", "fredr")
+libraries = c("data.table","dplyr","quantmod","openxlsx",
+              "lubridate","readxl", "tidyquant", "optionstrat", "fredr")
 suppressWarnings(lapply(libraries, require, character.only = TRUE))
 fredr_set_key("abcdefghijklmnopqrstuvwxyz123456")
 
