@@ -1,4 +1,4 @@
-<img align = "right" width="75" alt="logo" src="https://user-images.githubusercontent.com/97678601/149636901-fb79e698-7c0e-47fb-bb88-033785485fc7.png"> 
+<img align = "left" width="75" alt="logo" src="https://user-images.githubusercontent.com/97678601/149636901-fb79e698-7c0e-47fb-bb88-033785485fc7.png"> 
 
 # DV Options Income Analyzer
 
@@ -43,5 +43,5 @@ The program uses the following libraries:
 - optionstrat
 - fredr
 
-## Future Improvements
+## Future Enhancements
 As a future enhancement, I would like to replace the excel-based report with a shiny-based user interface that can refresh periodically to make the user experience more enjoyable and efficient. 
