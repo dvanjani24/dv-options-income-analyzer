@@ -42,3 +42,6 @@ The program uses the following libraries:
 - tidyquant
 - optionstrat
 - fredr
+
+## Future Improvements
+As a future enhancement, I would like to replace the excel-based report with a shiny-based user interface that can refresh periodically to make the user experience more enjoyable and efficient. 
