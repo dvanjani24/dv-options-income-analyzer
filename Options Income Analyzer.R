@@ -11,6 +11,7 @@ libraries = c(
 suppressWarnings(lapply(libraries, require, character.only = TRUE))
 fredr_set_key("abcdefghijklmnopqrstuvwxyz123456")
 
+# Input Portfolio
 portfolio <- data.frame(read_xlsx("Portfolio.xlsx"))
 
 Options_Income_Analyzer <- function(portfolio = portfolio){
